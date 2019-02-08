@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import '../styles/index.css';
 import Nav from './Nav.jsx';
+import Ide from './Ide.jsx';
 
 class App extends Component {
   render() {
@@ -8,7 +9,8 @@ class App extends Component {
       <div>
       hi
       < Nav />
-      </div>
+      <Ide/>
+    </div>
     )
   }
 }
