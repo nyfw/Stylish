@@ -5,15 +5,15 @@ import { NavStyle, UnorderedList } from '../styles/Nav.jsx'
 
 function Nav() {
   return (
-    <NavStyle>
-      < UnorderedList >
+    <NavStyle >
+      < UnorderedList primary >
         <li>logo</li>
         <li>about</li>
         <li>styled components</li>
         <li>try it</li>
       </UnorderedList>
 
-      <UnorderedList>
+      <UnorderedList primary>
         <li>donate</li>
         <li>github</li>
         <li>social</li>

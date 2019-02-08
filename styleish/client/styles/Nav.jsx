@@ -7,11 +7,12 @@ export const NavStyle = styled.div`
   justify-content: space-between;
 `;
 
+
 export const UnorderedList = styled.ul`
   list-style-type: none;
   display: inline;
   li {
-    margin-right: 20px;
+    margin-right: 35px;
     display: inline-block;
   }
 `;
