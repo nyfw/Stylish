@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const NavStyle = styled.div`
   display: flex;
-  height: 30px;
+  /* height: 30px; */
   background-color: lightblue;
   justify-content: space-between;
 `;
