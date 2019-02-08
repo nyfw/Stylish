@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import '../styles/index.css';
 import Nav from './Nav.jsx';
+import { Wrapper } from '../styles/Wrapper.jsx';
 
 class App extends Component {
   render() {
     return (
-      <div>
-      hi
-      < Nav />
-      </div>
+      <Wrapper>
+        < Nav />
+      </Wrapper>
     )
   }
 }
