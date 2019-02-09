@@ -7,18 +7,18 @@ let _colorObj = {};
 let _mainSCSS = '';
 let _mainCharset = '';
 
-const _cssToSingleLine = contents =>
+const flatten= contents =>
   contents
     .replace(/^\s*\/\/.*/gm, '')
     .replace(/\/\*.*\*\//g, '')
     .replace(/(?:\r\n|\r|\n)/g, '');
 
-const _processCssHead = headContent => {
+const trimCSSHead = headContent => {
   const trimmedHead = headContent.trim();
-  let parsedHeadContent = trimmedHead;
+  let result = trimmedHead;
 
   if (trimmedHead.substr(0, 6) !== '@media') {
-    parsedHeadContent = trimmedHead
+    result = trimmedHead
       .replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/g, '')
       .replace(/"/g, '\\"')
       .replace(/([^\s\(])(\.)([^\s])/g, '$1{&$2$3')
@@ -30,10 +30,10 @@ const _processCssHead = headContent => {
       .replace(/(\s*{\s*)/g, '":{"');
   }
 
-  return `"${parsedHeadContent}"`;
+  return `"${result}"`;
 };
 
-const _processCssBody = bodyContent => {
+const parsedCssBody = bodyContent => {
   const bodyContentArr = bodyContent
     .replace(/(\s*;(?![a-zA-Z\d]+)\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '~')
     .split('~');
@@ -108,7 +108,7 @@ const _cssarrayToObject = fileContentsArr => {
 
     dividedHead.forEach(headvalue => {
       if (head.length > 0) {
-        let processedHead = _processCssHead(headvalue);
+        let processedHead = trimCSSHead(headvalue);
         let processedBody = '';
 
         if (processedHead.substr(0, 2) === '"@') {
@@ -116,7 +116,7 @@ const _cssarrayToObject = fileContentsArr => {
           processedBody = JSON.stringify(_cssarrayToObject(_cssToArray(tail)));
           processedBody = processedBody.substr(1, processedBody.length - 2);
         } else {
-          processedBody = _processCssBody(tail);
+          processedBody = parsedCssBody(tail);
         }
 
         const closingBracketsInHead = (processedHead.match(/{/g) || []).length;
@@ -194,7 +194,7 @@ const convertCssToObject = cssContent => {
     console.log('Error', 'The source CSS is not valid');
   }
 
-  let singleLineCss = _cssToSingleLine(plainCss);
+  let singleLineCss = flatten(plainCss);
   const charsetRegexp = /^@charset\s\"([^\"]+)\";/;
   const matches = charsetRegexp.exec(singleLineCss);
   if (Array.isArray(matches) && matches[1]) {
