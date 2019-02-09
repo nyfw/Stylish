@@ -27,8 +27,10 @@ export const Button = styled.button`
 `
 
 export const AboutText = styled.div`
-  margin: 40px 40px 40px 40px;
+  margin: 0px 40px 40px 40px;
   max-width: 700px;
   text-align: center;
-
+  font-size: 1.6rem;
+  font-weight: 550;
+  color: hotpink;
 `;

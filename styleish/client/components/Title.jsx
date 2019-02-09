@@ -10,12 +10,11 @@ function Title() {
         <Button>GITHUB</Button>
         <Button>ABOUT</Button>
         </div>
-        <Ide />
-      <AboutText>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi ab alias harum quia. Rerum esse, illo rem sequi cumque vitae vel. Necessitatibus omnis cumque nihil eveniet quos odit accusamus.
-
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi ab alias harum quia. Rerum esse, illo rem sequi cumque vitae vel. Necessitatibus omnis cumque nihil eveniet quos odit accusamus.
+        <AboutText>
+      &hearts; Ready-To-Use styling transpiler &hearts; <br></br>
+      Convert your CSS elements to React Styled Components instantly
       </AboutText>
+        <Ide />
     </TitleWrapper>
   )
 }

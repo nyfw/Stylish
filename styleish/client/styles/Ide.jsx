@@ -9,6 +9,6 @@ export const TranslateButton = styled.button`
   width: 300px;
   margin-top: 10px;
   font-weight: 700;
-
   margin-left: 200px;
+  margin-bottom: 70px;
 `;

@@ -70,6 +70,7 @@ class Ide extends React.Component {
         showLineNumbers = {false}
         enableBasicAutocompletion={true}
         enableLiveAutocompletion={true}
+        wrapEnabled = {true}
         enableSnippets={true}
         width = '700px'
         height = '250px'
