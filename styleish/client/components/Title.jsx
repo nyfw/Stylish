@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 import { TitleWrapper, AboutText, Button } from '../styles/Title.jsx';
 import Ide from './Ide.jsx';
+import { Link } from 'react-router-dom';
 
 function Title() {
   return (
@@ -16,7 +17,7 @@ function Title() {
       </AboutText>
         <Ide />
     </TitleWrapper>
-  )
+  );
 }
 
-export default Title
+export default Title;
