@@ -40,7 +40,6 @@ class App extends Component {
         <Wrapper>
         < Nav />
           < Title />
-          <Ide/>
         </Wrapper>
       </div>
     )

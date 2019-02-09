@@ -7,6 +7,8 @@ function Nav() {
   return (
     <NavStyle>
       <UnorderedList primary>
+    <NavStyle >
+      < UnorderedList primary >
         <li>logo</li>
         <li>about</li>
         <li>styled components</li>
