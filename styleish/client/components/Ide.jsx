@@ -81,6 +81,7 @@ class Ide extends React.Component {
           enableLiveAutocompletion={true}
           enableSnippets={true}
           width='700px'
+          wrapEnabled = {true}
           height='250px'
         />
       <TranslateButton>
