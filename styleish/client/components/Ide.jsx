@@ -57,8 +57,8 @@ class Ide extends React.Component {
         width = '700px'
         height = '250px'
       />
-      <TranslateButton>
-      <button onClick={()=>{this.handleSubmit()}}>TRANSLATE</button>
+      <TranslateButton onClick={()=>{this.handleSubmit()}}>
+      TRANSLATE    &#9658; &#9658; &#9658; &#9658;
       </TranslateButton>
       
       </div>
