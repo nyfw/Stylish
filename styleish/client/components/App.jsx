@@ -33,8 +33,8 @@ class App extends Component {
       <div>
         <GlobalStyle/>
         <Wrapper>
-        < Nav />
-          < Title />
+        <Nav/>
+          <Title />
         </Wrapper>
       </div>
     )

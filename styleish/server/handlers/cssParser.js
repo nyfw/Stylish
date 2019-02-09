@@ -3,229 +3,232 @@ const perfectionist = require('perfectionist');
 const namer = require('color-namer');
 const sass = require('node-sass');
 
-const colorObj = {};
-let scssResult = '';
-let mainCharset = '';
+let _colorObj = {};
+let _mainSCSS = '';
+let _mainCharset = '';
 
-const flattenCSS = css => {
-    return css
-        .replace(/^\s*\/\/.*/gm, '')
-        .replace(/\/\*.*\*\//g, '')
-        .replace(/(?:\r\n|\r|\n)/g, '');
+const _cssToSingleLine = contents =>
+  contents
+    .replace(/^\s*\/\/.*/gm, '')
+    .replace(/\/\*.*\*\//g, '')
+    .replace(/(?:\r\n|\r|\n)/g, '');
+
+const _processCssHead = headContent => {
+  const trimmedHead = headContent.trim();
+  let parsedHeadContent = trimmedHead;
+
+  if (trimmedHead.substr(0, 6) !== '@media') {
+    parsedHeadContent = trimmedHead
+      .replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/g, '')
+      .replace(/"/g, '\\"')
+      .replace(/([^\s\(])(\.)([^\s])/g, '$1{&$2$3')
+      .replace(/(\s*::\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '{&:')
+      .replace(/([^&])\s*:\s*(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '$1{&:')
+      .replace(/(\s*>\s*)/g, '{>')
+      .replace(/(\s*\+\s*)/g, '{+')
+      .replace(/\s(?=([^"]*"[^"]*")*[^"]*$)/g, '{')
+      .replace(/(\s*{\s*)/g, '":{"');
+  }
+
+  return `"${parsedHeadContent}"`;
 };
 
-const trimCSSHead = head => {
-    const trimmedHead = head.trim();
-    let result = trimmedHead;
+const _processCssBody = bodyContent => {
+  const bodyContentArr = bodyContent
+    .replace(/(\s*;(?![a-zA-Z\d]+)\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '~')
+    .split('~');
 
-    if (trimmedHead.substr(0, 6) !== '@media') {
-        result = trimmedHead
-            .replace(/\/\*[\s\S]*?\*\/|([^:]|^)\/\/.*$/g, '')
-            .replace(/"/g, '\\"')
-            .replace(/([^\s\(])(\.)([^\s])/g, '$1{&$2$3')
-            .replace(/(\s*::\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '{&:')
-            .replace(/([^&])\s*:\s*(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '$1{&:')
-            .replace(/(\s*>\s*)/g, '{>')
-            .replace(/(\s*\+\s*)/g, '{+')
-            .replace(/\s(?=([^"]*"[^"]*")*[^"]*$)/g, '{')
-            .replace(/(\s*{\s*)/g, '":{"');
+  let cumulator = '';
+
+  bodyContentArr.forEach(attribute => {
+    if (attribute.length > 1) {
+      const pullColorVar = attribute.match(/[^0-9A-Za-z]+(#[0-9A-Fa-f]{3,6})/);
+      let modAttribute = attribute;
+
+      if (pullColorVar != null) {
+        const colorVar = pullColorVar[1];
+        const colorName =
+          namer(colorVar).html[0].name + colorVar.replace('#', '_');
+        _colorObj[`$${colorName}`] = `${colorVar}`;
+        modAttribute = attribute.replace(
+          /([^0-9A-Za-z]+)(#[0-9A-Fa-f]{3,6})/,
+          `$1$${colorName}`
+        );
+      }
+
+      cumulator += `"${modAttribute
+        .replace(/\\/g, '\\\\')
+        .replace(/"/g, '\\"')
+        .replace(/(\s*;\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '","')
+        .replace(/(\s*:\s*)/, '":"')
+        .trim()}",`;
+    }
+  });
+
+  return cumulator.substr(0, cumulator.length - 1);
+};
+
+const _cssToArray = css => {
+  let level = 0;
+  let cumuloString = '';
+  const cssArray = [];
+
+  for (let i = 0; i <= css.length; i++) {
+    const char = css[i];
+    cumuloString += char;
+    if (char === '{') {
+      level += 1;
+    } else if (char === '}') {
+      level -= 1;
+      if (level === 0) {
+        cssArray.push(cumuloString);
+        cumuloString = '';
+      }
+    }
+  }
+
+  return cssArray;
+};
+
+const _cssarrayToObject = fileContentsArr => {
+  const mainObject = {};
+
+  fileContentsArr.forEach(value => {
+    const head = value.match(/(.*?){/)[1];
+
+    const tail = value.match(/{(.*)}/)[1];
+
+    const cleanHead = head.trim();
+    let dividedHead;
+    if (cleanHead.substr(0, 1) === '@') {
+      dividedHead = [cleanHead];
+    } else {
+      dividedHead = cleanHead.split(',');
     }
 
-    return `"${result}"`;
-};
+    dividedHead.forEach(headvalue => {
+      if (head.length > 0) {
+        let processedHead = _processCssHead(headvalue);
+        let processedBody = '';
 
-const trimCSSBody = css => {
-    const cssArr = css
-        .replace(/(\s*;(?![a-zA-Z\d]+)\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '~')
-        .split('~');
-    let result = '';
-    cssArr.forEach(style => {
-        if (style.length > 1) {
-            const styleColor = style.match(/[^0-9A-Za-z]+(#[0-9A-Fa-f]{3,6})/);
-            let finalStyle = style;
-
-            if (styleColor !== null) {
-                const color = styleColor[1];
-                const colorName = namer(color).html[0].name + color.replace('#', '_');
-                colorObj[`$${colorName}`] = `${color}`;
-                finalStyle = style.replace(
-                    /([^0-9A-Za-z]+)(#[0-9A-Fa-f]{3,6})/,
-                    `$1$${colorName}`
-                );
-            }
-
-            result += `"${finalStyle
-                .replace(/\\/g, '\\\\')
-                .replace(/"/g, '\\"')
-                .replace(/(\s*;\s*)(?=([^\(]*\([^\(\)]*\))*[^\)]*$)/g, '","')
-                .replace(/(\s*:\s*)/, '":"')
-                .trim()}",`;
-        }
-    });
-
-    return result.substr(0, result.length - 1);
-};
-
-const convertToArray = css => {
-    let idx = 0;
-    let result = '';
-    const cssArray = [];
-
-    for (let i = 0; i <= css.length; i += 1) {
-        const char = css[i];
-        result += char;
-        if (char === '{') {
-            idx += 1;
-        } else if (char === '}') {
-            idx -= 1;
-            if (idx === 0) {
-                cssArray.push(result);
-                result = '';
-            }
-        }
-    }
-
-    return cssArray;
-};
-
-const cssConvertToObject = arr => {
-    const result = {};
-
-    arr.forEach(value => {
-        const start = value.match(/(.*?){/)[1];
-        const end = value.match(/{(.*)}/)[1];
-
-        const trimmedStart = start.trim();
-        let runningTrim;
-        if (trimmedStart.substr(0, 1) === '@') {
-            runningTrim = [trimmedStart];
+        if (processedHead.substr(0, 2) === '"@') {
+          processedHead = `"${headvalue}"`;
+          processedBody = JSON.stringify(_cssarrayToObject(_cssToArray(tail)));
+          processedBody = processedBody.substr(1, processedBody.length - 2);
         } else {
-            runningTrim = trimmedStart.split(',');
+          processedBody = _processCssBody(tail);
         }
 
-        runningTrim.forEach(ele => {
-            if (start.length > 0) {
-                let trimmedHead = trimCSSHead(ele);
-                let trimmedBody = '';
+        const closingBracketsInHead = (processedHead.match(/{/g) || []).length;
 
-                if (trimmedHead.substr(0, 2) === '"@') {
-                    trimmedHead = `"${ele}"`;
-                    trimmedBody = JSON.stringify(cssConvertToObject(convertToArray(end)));
-                    trimmedBody = trimmedBody.substr(1, trimmedBody.length - 2);
-                } else {
-                    trimmedBody = trimCSSBody(end);
-                }
+        const completeClause = `${processedHead}:{${processedBody}${'}'.repeat(
+          closingBracketsInHead + 1
+        )}`;
 
-                const startBracket = (trimmedHead.match(/{/g) || []).length;
-
-                const combined = `${trimmedHead}:{${trimmedBody}${'}'.repeat(
-                    startBracket + 1
-                )}`;
-
-                const combinedParsed = JSON.parse(`{${combined}}`);
-                merge(result, combinedParsed);
-            }
-        });
+        const objectClause = JSON.parse(`{${completeClause}}`);
+        _.merge(mainObject, objectClause);
+      }
     });
+  });
 
-    return result;
+  return mainObject;
 };
 
-const contains = obj => {
-    let containsObj = false;
-    const keys = Object.keys(obj);
+const _objectContainsObject = objectVal => {
+  let containsObject = false;
+  const keychain = Object.keys(objectVal);
 
-    keys.forEach(key => {
-        if (typeof obj[key] === 'object') containsObj = true;
-    });
+  keychain.forEach(key => {
+    if (typeof objectVal[key] === 'object') containsObject = true;
+  });
 
-    return containsObj;
+  return containsObject;
 };
 
-const objToCSS = obj => {
-    const keys = Object.keys(obj);
+const _cssObjectToCss = contentObject => {
+  const keychain = Object.keys(contentObject);
 
-    if (!contains(obj)) {
-        keys.sort();
+  if (!_objectContainsObject(contentObject)) {
+    keychain.sort();
+  }
+
+  keychain.forEach(key => {
+    if (typeof contentObject[key] === 'object') {
+      _mainSCSS += `${key}{`;
+      _cssObjectToCss(contentObject[key]);
+      _mainSCSS += '}';
+    } else {
+      _mainSCSS += `${key}:${contentObject[key]};`;
     }
-
-    keys.forEach(key => {
-        if (typeof obj[key] === 'object') {
-            scssResult += `${key}{`;
-            objToCSS(obj[key]);
-            scssResult += '}';
-        } else {
-            scssResult += `${key}:${obj[key]};`;
-        }
-    });
+  });
 };
 
-const objToKeyValueCss = obj => {
-    if (typeof obj === 'object') {
-        const keys = Object.keys(obj);
+const _objToKeyValueCss = objectVal => {
+  if (typeof objectVal === 'object') {
+    const keychain = Object.keys(objectVal);
 
-        if (keys.length > 0) {
-            keys.sort();
+    if (keychain.length > 0) {
+      keychain.sort();
 
-            let stringOutput = '';
+      let stringOutput = '';
 
-            keys.forEach(key => {
-                stringOutput += `${key}:${obj[key]};`;
-            });
+      keychain.forEach(key => {
+        stringOutput += `${key}:${objectVal[key]};`;
+      });
 
-            return stringOutput;
-        }
+      return stringOutput;
     }
-    return '';
+  }
+  return '';
 };
 
-const convertCssToObject = css => {
-    let result;
-    try {
-        result = sass
-            .renderSync({
-                data: css
-            })
-            .css.toString();
-    } catch (error) {
-        console.log('invalid CSS');
-    }
+const convertCssToObject = cssContent => {
+  let plainCss;
+  try {
+    plainCss = sass
+      .renderSync({
+        data: cssContent
+      })
+      .css.toString();
+  } catch (error) {
+    console.log('Error', 'The source CSS is not valid');
+  }
 
-    let flatCSS = flattenCSS(result);
-    const regEx = /^@charset\s\"([^\"]+)\";/;
-    const matches = regEx.exec(flatCSS);
-    if (Array.isArray(matches) && matches[1]) {
-        mainCharset = matches[1];
-        flatCSS = flatCSS.replace(regEx, '');
-    }
+  let singleLineCss = _cssToSingleLine(plainCss);
+  const charsetRegexp = /^@charset\s\"([^\"]+)\";/;
+  const matches = charsetRegexp.exec(singleLineCss);
+  if (Array.isArray(matches) && matches[1]) {
+    _mainCharset = matches[1];
+    singleLineCss = singleLineCss.replace(charsetRegexp, '');
+  }
 
-    const cssArray = convertToArray(flatCSS);
+  const cssArray = _cssToArray(singleLineCss);
 
-    try {
-        return cssConvertToObject(cssArray);
-    } catch (error) {
-        console.log('Error converting');
-    }
+  try {
+    return _cssarrayToObject(cssArray);
+  } catch (error) {
+    console.log('There was a problem converting the CSS to an Object');
+  }
 
-    return true;
+  return true;
 };
 
-const convertCssToScss = css => {
-    const cssObject = convertCssToObject(css);
-    objToCSS(cssObject);
-    const charset = mainCharset ? `@charset "${mainCharset}";\n` : '';
-
-    const colorVars = objToKeyValueCss(colorObj);
-    const result = charset + colorVars + scssResult;
-    const final = perfectionist.process(result, {
-        indentSize: 2,
-        colorShorthand: false
-    });
-
-    return final.css;
+const convertCssToScss = cssContent => {
+  (_mainSCSS = ''), (_mainCharset = ''), (_colorObj = {});
+  const cssObject = convertCssToObject(cssContent);
+  _cssObjectToCss(cssObject);
+  const charset = _mainCharset ? `@charset "${_mainCharset}";\n` : '';
+  const colorVars = _objToKeyValueCss(_colorObj);
+  const completedProcessing = charset + colorVars + _mainSCSS;
+  const cleanResult = perfectionist.process(completedProcessing, {
+    indentSize: 2,
+    colorShorthand: false
+  });
+  return cleanResult.css;
 };
+
+console.log(convertCssToScss( `.body {width: 800px; color: #ffffff} .body content {width: 750px; background: #ffffff} .body content:hover {width: 200px}`))
 
 module.exports = {
     convertCssToScss
-};
-
+}
