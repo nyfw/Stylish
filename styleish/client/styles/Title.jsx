@@ -5,15 +5,25 @@ export const TitleWrapper = styled.div`
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: seagreen;
+  background-color: #ECD0EE;
 
 
   img {
-    margin-top: 50px;
+    margin: 50px 0 40px 0;
     width: 130px;
     height: 130px;
     flex: 1;
   }
+`
+export const Button = styled.button`
+  border: 0px;
+  border-radius: 10px;
+  background-color: 'white';
+  padding: 0px;
+  margin: 0px 20px 40px 20px;
+  width: 110px;
+  height: 35px;
+  display: inline;
 `
 
 export const AboutText = styled.div`

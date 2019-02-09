@@ -33,11 +33,18 @@ class App extends Component {
   render() {
     return (
       <div>
+<<<<<<< HEAD
         <GlobalStyle />
+=======
+        <GlobalStyle/>
+>>>>>>> 882359c3ef200083874f477986fafc8325c71b10
         <Wrapper>
           < Nav />
           < Title />
+<<<<<<< HEAD
           <Ide />
+=======
+>>>>>>> 882359c3ef200083874f477986fafc8325c71b10
         </Wrapper>
       </div>
     )

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import brace from 'brace';
 import {split as AceEditor } from 'react-ace';
 import 'brace/mode/css';
-import 'brace/theme/monokai';
+import 'brace/theme/xcode';
 
 
 class Ide extends React.Component {
@@ -41,10 +41,9 @@ class Ide extends React.Component {
   render() {
     return (
       <div>
-      <div>hi ()=^-^=</div>
       <AceEditor
         mode="css"
-        theme="monokai"
+        theme="xcode"
         onChange={this.onChange}
         name="app"
         value = {[this.state.userInput, this.state.code]}
@@ -54,7 +53,8 @@ class Ide extends React.Component {
         enableBasicAutocompletion={true}
         enableLiveAutocompletion={true}
         enableSnippets={true}
-        width= '700'
+        width = '700px'
+        height = '250px'
       />
       <button onClick={()=>{this.handleSubmit()}}>TRANSLATE</button>
       </div>
