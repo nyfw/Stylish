@@ -5,11 +5,6 @@ import { NavStyle, UnorderedList } from '../styles/Nav.jsx'
 
 function Nav() {
   return (
-<<<<<<< HEAD
-    <div>
-
-    </div>
-=======
     <NavStyle >
       < UnorderedList primary >
         <li>logo</li>
@@ -24,7 +19,6 @@ function Nav() {
         <li>social</li>
       </UnorderedList>
     </NavStyle>
->>>>>>> be70091c5e1acc28b236e5a2d62afa290e4e282f
   )
 }
 
