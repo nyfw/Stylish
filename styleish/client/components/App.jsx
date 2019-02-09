@@ -3,9 +3,7 @@ import { createGlobalStyle } from "styled-components";
 
 // components 
 import Nav from './Nav.jsx';
-<<<<<<< HEAD
 import Login from './Login.jsx';
-=======
 import Title from './Title.jsx';
 import Ide from './Ide.jsx';
 
@@ -31,23 +29,19 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
   }
 `;
->>>>>>> be70091c5e1acc28b236e5a2d62afa290e4e282f
 
 class App extends Component {
   render() {
     return (
       <div>
-<<<<<<< HEAD
         < Nav />
         <Login />
-=======
         <GlobalStyle/>
         <Wrapper>
         < Nav />
           < Title />
           <Ide/>
         </Wrapper>
->>>>>>> be70091c5e1acc28b236e5a2d62afa290e4e282f
       </div>
     )
   }
