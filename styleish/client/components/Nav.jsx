@@ -5,6 +5,8 @@ import { NavStyle, UnorderedList } from '../styles/Nav.jsx'
 
 function Nav() {
   return (
+    <NavStyle>
+      <UnorderedList primary>
     <NavStyle >
       <UnorderedList primary>
         <li>logo</li>
