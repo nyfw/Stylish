@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import brace from 'brace';
 import {split as AceEditor } from 'react-ace';
+import fetch from 'isomorphic-fetch'
 import 'brace/mode/css';
 import 'brace/theme/xcode';
 
@@ -11,19 +12,17 @@ class Ide extends React.Component {
     this.onChange = this.onChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 
+
     this.state = {
         userInput: '',
-        code: ''
+        converted: ''
     };
   }
 
+
   onChange(newValue) {
     let unparsed = '';
-    let translated = '';
-    console.log('newValue', newValue);
     unparsed += newValue[0];
-    newValue[0] = newValue[0] + "hiiii";
-    translated += newValue[0];
     this.setState((state, props) => {
         return {
          userInput: state.userInput = unparsed,
@@ -32,11 +31,29 @@ class Ide extends React.Component {
     console.log(this.state)
   }
 
-  handleSubmit () {
-      let original = this.state.userInput;
-      let converted = original;
-      this.setState({code: converted});
-  }
+  // handleSubmit () {
+  //     let original = this.state.userInput;
+  //     let converted = original;
+  //     this.setState({converted: converted});
+  // }
+
+  handleSubmit() {
+    fetch('http://localhost:3000/translate', {
+      method: 'post',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        css: this.state.userInput
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data) {
+          console.log(data)
+        } else {
+          console.log(data);
+        }
+      });
+  };
 
   render() {
     return (
