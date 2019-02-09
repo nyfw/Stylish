@@ -5,7 +5,7 @@ import Ide from './Ide.jsx';
 function Title() {
   return (
     <TitleWrapper>
-        <img src="https://www.styled-components.com/static/logo.png"></img>
+        <img src="./logo.png"></img>
         <div>
         <Button>GITHUB</Button>
         <Button>ABOUT</Button>
