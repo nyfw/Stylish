@@ -1,21 +1,46 @@
 version: '3'
 
 services:
-  client:
-    container_name: stylish
-    build: ./client
-    command: npm run start:dev
-    ports:
-      - '8080:8080'
-    volumes:
-      - /app/node_modules
-      - ./client:/app
+  # client:
+  #   container_name: stylish
+  #   build: ./client
+  #   command: npm run start:dev
+  #   ports:
+  #     - '8080:8080'
+  #   volumes:
+  #     - /app/node_modules
+  #     - ./client:/app
   server:
     container_name: Server
     build: ./server
     command: npm start
+    environment:
+      POSTGRES_USER: hubert
+      POSTGRES_PASSWORD: 'hi'
+      POSTGRES_DB: backend
+      POSTGRES_HOST: postgres
+      REDIS_URL: redis://redis:6379
+    links:
+      - postgres
+      - redis
     ports:
       - '3000:3000'
     volumes:
       - /app/node_modules
       - ./server:/app
+
+  postgres:
+    container_name: my_postgres
+    environment:
+      POSTGRES_USER: hubert
+      POSTGRES_PASSWORD: 'hi'
+      POSTGRES_DB: backend
+      POSTGRES_HOST: postgres
+    build: ./server/postgres
+    ports:
+      - 5432
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - '6379:6379'
