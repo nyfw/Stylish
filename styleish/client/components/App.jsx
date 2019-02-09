@@ -1,7 +1,8 @@
-import React, { Component } from "react";
-import { createGlobalStyle } from "styled-components";
+import React, { Component } from 'react';
+import { createGlobalStyle } from 'styled-components';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-// components 
+// components
 import Nav from './Nav.jsx';
 import Title from './Title.jsx';
 // style components
@@ -30,14 +31,16 @@ const GlobalStyle = createGlobalStyle`
 class App extends Component {
   render() {
     return (
-      <div>
-        <GlobalStyle/>
-        <Wrapper>
-        <Nav/>
-          <Title />
-        </Wrapper>
-      </div>
-    )
+      <Router>
+        <div>
+          <GlobalStyle />
+          <Wrapper>
+            <Nav />
+            <Title />
+          </Wrapper>
+        </div>
+      </Router>
+    );
   }
 }
 
