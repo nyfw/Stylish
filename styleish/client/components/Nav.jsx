@@ -1,11 +1,10 @@
-import React from 'react';
-const NavLink = require('react-router-dom').NavLink;
-import { NavStyle, UnorderedList } from '../styles/Nav.jsx'
-
+import React from "react";
+const NavLink = require("react-router-dom").NavLink;
+import { NavStyle, UnorderedList } from "../styles/Nav.jsx";
 
 function Nav() {
   return (
-    <NavStyle >
+    <NavStyle>
       <UnorderedList primary>
         <li>logo</li>
         <li>about</li>
@@ -19,8 +18,7 @@ function Nav() {
         <li>social</li>
       </UnorderedList>
     </NavStyle>
-  )
+  );
 }
 
-export default Nav
-
+export default Nav;
