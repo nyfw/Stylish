@@ -16,13 +16,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-<<<<<<< HEAD
     "bootstrap": "^4.2.1",
     "lodash": "^4.17.11",
     "perfectionist": "^2.4.0",
-=======
     "brace": "^0.11.1",
->>>>>>> be70091c5e1acc28b236e5a2d62afa290e4e282f
     "react": "^16.8.1",
     "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.1",
