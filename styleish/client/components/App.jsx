@@ -34,19 +34,19 @@ class App extends Component {
     return (
       <div>
 <<<<<<< HEAD
-        <GlobalStyle />
+    <GlobalStyle />
 =======
         <GlobalStyle/>
 >>>>>>> 882359c3ef200083874f477986fafc8325c71b10
-        <Wrapper>
-          < Nav />
-          < Title />
+      <Wrapper>
+        < Nav />
+        < Title />
 <<<<<<< HEAD
-          <Ide />
+    <Ide />
 =======
 >>>>>>> 882359c3ef200083874f477986fafc8325c71b10
-        </Wrapper>
-      </div>
+        </Wrapper >
+      </div >
     )
   }
 }
