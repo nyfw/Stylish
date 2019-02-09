@@ -9,3 +9,4 @@ const translate = (req, res) => {
 module.exports = {
     translate
 }
+
