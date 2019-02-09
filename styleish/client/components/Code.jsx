@@ -4,7 +4,7 @@ function Code() {
     return (
         <div>
             Put codes here
-    </div>
+        </div>
     )
 }
 
