@@ -12,7 +12,7 @@ function Title() {
         <Button>ABOUT</Button>
         </div>
         <AboutText>
-      &hearts; Ready-To-Use styling transpiler &hearts; <br></br>
+      &hearts; the Ready-To-Use styling transpiler &hearts; <br></br>
       Convert your CSS elements to React Styled Components instantly
       </AboutText>
         <Ide />

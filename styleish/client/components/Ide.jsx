@@ -5,7 +5,6 @@ import fetch from 'isomorphic-fetch';
 import { TranslateButton } from '../styles/Ide.jsx';
 import 'brace/mode/css';
 import 'brace/theme/xcode';
-
 class Ide extends React.Component {
   constructor(props) {
     super(props);
@@ -13,20 +12,17 @@ class Ide extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.convertToStyled = this.convertToStyled.bind(this);
     this.state = {
-      userInput: '/*Load your css*/ \n \n',
-      converted: '/*Styled component translation here*/ \n \n'
+      userInput: '/*Load your css*/ \n \n h1 { \n color: red \n}',
+      converted: '/*Styled component translation here*/ \n \n const myH1style = styled.h1` \n  color: red; \n`;'
     };
   }
-
   onChange(newValue) {
     let unparsed = '';
     unparsed += newValue[0];
     this.setState({ userInput: unparsed });
   }
-
   convertToStyled(data) {
     let firstBracket, lastBracket, copiedinfo;
-
     for (let i = 0; i < data.length; i++) {
       if (data[i] === '{') {
         firstBracket = i;
@@ -41,12 +37,11 @@ class Ide extends React.Component {
     }
     copiedinfo = data.substring(firstBracket + 1, lastBracket);
     let result =
-      '/*Styled component translation here*/ \n \n const <yourStyledElement> = styled.<tagToStyle>`' +
+      '/*Styled component translation here*/ \n \n const <styleName> = styled.<HTMLtag>`' +
       copiedinfo +
       '`;';
     return result;
   }
-
   handleSubmit() {
     fetch('http://localhost:3000/translate', {
       method: 'post',
@@ -65,33 +60,30 @@ class Ide extends React.Component {
         }
       });
   }
-
   render() {
     return (
       <div>
-      <AceEditor
-        mode="css"
-        theme="xcode"
-        onChange={this.onChange}
-        name="app"
-        value = {[this.state.userInput, this.state.code]}
-        splits = {2}
-        editorProps={{$blockScrolling: true}}
-        showLineNumbers = {false}
-        enableBasicAutocompletion={true}
-        enableLiveAutocompletion={true}
-        wrapEnabled = {true}
-        enableSnippets={true}
-        width = '700px'
-        height = '250px'
-      />
-      <TranslateButton onClick={()=>{this.handleSubmit()}}>
+        <AceEditor
+          mode="css"
+          theme="xcode"
+          onChange={this.onChange}
+          name="app"
+          value={[this.state.userInput, this.state.converted]}
+          splits={2}
+          editorProps={{ $blockScrolling: true }}
+          showLineNumbers={false}
+          enableBasicAutocompletion={true}
+          enableLiveAutocompletion={true}
+          enableSnippets={true}
+          wrapEnabled   = {true}
+          width="700px"
+          height="250px"
+        />
+    <TranslateButton onClick={()=>{this.handleSubmit()}}>
       TRANSLATE    &#9658; &#9658; &#9658; &#9658;
       </TranslateButton>
-      
       </div>
     );
   }
 }
-
 export default Ide;
