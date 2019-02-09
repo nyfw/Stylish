@@ -4,8 +4,6 @@ import { createGlobalStyle } from "styled-components";
 // components 
 import Nav from './Nav.jsx';
 import Title from './Title.jsx';
-import Ide from './Ide.jsx';
-
 // style components
 import { Wrapper } from '../styles/Wrapper.jsx';
 

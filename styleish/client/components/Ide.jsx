@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import brace from 'brace';
 import {split as AceEditor } from 'react-ace';
 import fetch from 'isomorphic-fetch'
+import { TranslateButton } from '../styles/Ide.jsx'
 import 'brace/mode/css';
 import 'brace/theme/xcode';
 
@@ -73,7 +74,10 @@ class Ide extends React.Component {
         width = '700px'
         height = '250px'
       />
+      <TranslateButton>
       <button onClick={()=>{this.handleSubmit()}}>TRANSLATE</button>
+      </TranslateButton>
+      
       </div>
     )
   }
