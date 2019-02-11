@@ -6,7 +6,7 @@ import { NavStyle, UnorderedList } from '../styles/Nav.jsx'
 function Nav() {
   return (
     <NavStyle >
-      < UnorderedList primary >
+      <UnorderedList primary>
         <li>logo</li>
         <li>about</li>
         <li>styled components</li>

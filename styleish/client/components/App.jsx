@@ -3,7 +3,6 @@ import { createGlobalStyle } from "styled-components";
 
 // components 
 import Nav from './Nav.jsx';
-import Login from './Login.jsx';
 import Title from './Title.jsx';
 import Ide from './Ide.jsx';
 
@@ -34,13 +33,10 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Nav />
-        <Login />
         <GlobalStyle/>
-          <Wrapper>
-            <Nav />
+        <Wrapper>
+        <Nav />
           <Title />
-          <Ide/>
         </Wrapper>
       </div>
     )
