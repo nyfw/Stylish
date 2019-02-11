@@ -8,8 +8,8 @@ function Title() {
     <TitleWrapper>
       <img src="./logo.png" />
       <div>
-        <Button>REGISTER</Button>
-        <Button>SIGN IN</Button>
+        <Button><Link to="/register">REGISTER</Link></Button>
+        <Button><Link to="/login">LOG IN</Link></Button>
       </div>
 
       <Ide />

@@ -11,7 +11,7 @@ export const TitleWrapper = styled.div`
   img {
     margin: 50px 0 40px 0;
     width: 160px;
-    height: 160px;
+    height: 200px;
     flex: 1;
   }
 `
