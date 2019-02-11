@@ -8,15 +8,12 @@ function Nav() {
       <UnorderedList primary>
         <li>logo</li>
         <li><Link to="/about">About</Link></li>
-        <li>styled components</li>
+        <li><Link to="/register">Register</Link></li>
         <li><Link to="/login">Login</Link></li>
-        <li>try it</li>
       </UnorderedList>
 
       <UnorderedList primary>
-        <li>donate</li>
-        <li>github</li>
-        <li>social</li>
+        <li>Github</li>
       </UnorderedList>
     </NavStyle>
   )

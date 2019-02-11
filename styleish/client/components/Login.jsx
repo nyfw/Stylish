@@ -6,7 +6,7 @@ class Login extends React.Component {
     return (
       <TitleWrapper>
         <h1>Login</h1>
-        <form>
+        <form action = "http://localhost:3000/login">
             Username: <input type= "text"></input>
             <br></br>
             <br></br>

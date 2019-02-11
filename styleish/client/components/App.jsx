@@ -6,6 +6,7 @@ import Nav from './Nav.jsx';
 import Title from './Title.jsx';
 import Login from "./Login.jsx";
 import Opening from "./Opening.jsx";
+import Register from "./Register.jsx";
 
 
 // style components
@@ -49,6 +50,7 @@ class App extends Component {
         <div>
           <Route exact path="/" component={Home}/>
           <Route path="/login" component={Login}/>
+          <Route path="/register" component={Register}/>
           <Route path="/about" component={Opening}/>
         </div>
     )
