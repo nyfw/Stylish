@@ -81,6 +81,7 @@ class Ide extends React.Component {
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
           enableSnippets={true}
+          wrapEnabled	= {true}
           width="700px"
           height="250px"
         />

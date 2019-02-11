@@ -1,10 +1,13 @@
-import React, { Component } from 'react';
-import { createGlobalStyle } from 'styled-components';
-import { BrowserRouter as Router } from 'react-router-dom';
-
-// components
+import React, { Component } from "react";
+import { createGlobalStyle } from "styled-components";
+import { Route, Link } from 'react-router-dom';
+// components 
 import Nav from './Nav.jsx';
 import Title from './Title.jsx';
+import Login from "./Login.jsx";
+import Opening from "./Opening.jsx";
+
+
 // style components
 import { Wrapper } from '../styles/Wrapper.jsx';
 
@@ -28,20 +31,30 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+function Home (){
+  return (
+    <div>
+      <Wrapper>
+      <GlobalStyle/>
+      <Nav/>
+      <Title />
+      </Wrapper>
+    </div>
+  )
+};
+
 class App extends Component {
   render() {
     return (
-      <Router>
         <div>
-          <GlobalStyle />
-          <Wrapper>
-            <Nav />
-            <Title />
-          </Wrapper>
+          <Route exact path="/" component={Home}/>
+          <Route path="/login" component={Login}/>
+          <Route path="/about" component={Opening}/>
         </div>
-      </Router>
-    );
+    )
   }
 }
 
 export default App;
+
+
