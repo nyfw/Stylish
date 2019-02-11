@@ -1,22 +1,19 @@
 import React from 'react';
-const NavLink = require('react-router-dom').NavLink;
+import { Route, Link } from 'react-router-dom';
 import { NavStyle, UnorderedList } from '../styles/Nav.jsx'
-
 
 function Nav() {
   return (
-    <NavStyle >
+    <NavStyle>
       <UnorderedList primary>
         <li>logo</li>
-        <li>about</li>
-        <li>styled components</li>
-        <li>try it</li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/register">Register</Link></li>
+        <li><Link to="/login">Login</Link></li>
       </UnorderedList>
 
       <UnorderedList primary>
-        <li>donate</li>
-        <li>github</li>
-        <li>social</li>
+        <li>Github</li>
       </UnorderedList>
     </NavStyle>
   )
