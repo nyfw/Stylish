@@ -7,7 +7,7 @@ let _colorObj = {};
 let _mainSCSS = '';
 let _mainCharset = '';
 
-const flatten= contents =>
+const flatten = contents =>
   contents
     .replace(/^\s*\/\/.*/gm, '')
     .replace(/\/\*.*\*\//g, '')
@@ -227,8 +227,12 @@ const convertCssToScss = cssContent => {
   return cleanResult.css;
 };
 
-console.log(convertCssToScss( `.body {width: 800px; color: #ffffff} .body content {width: 750px; background: #ffffff} .body content:hover {width: 200px}`))
+console.log(
+  convertCssToScss(
+    `.body {width: 800px; color: #ffffff} .body content {width: 750px; background: #ffffff} .body content:hover {width: 200px}`
+  )
+);
 
 module.exports = {
-    convertCssToScss
-}
+  convertCssToScss
+};
