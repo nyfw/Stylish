@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Login /> matches snapshot 1`] = `
+<div
+  className="sc-bdVaJa efbDat"
+>
+  <h1>
+    Login
+  </h1>
+  <form
+    action="http://localhost:3000/login"
+  >
+    Username: 
+    <input
+      type="text"
+    />
+    <br />
+    <br />
+    Password: 
+    <input
+      type="text"
+    />
+  </form>
+</div>
+`;
