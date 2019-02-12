@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
-import { Route, Link } from 'react-router-dom';
-// components 
-import Nav from './Nav.jsx';
-import Title from './Title.jsx';
+import { Route, Link } from "react-router-dom";
+
+// components
+import Nav from "./Nav.jsx";
+import Title from "./Title.jsx";
 import Login from "./Login.jsx";
 import Opening from "./Opening.jsx";
 import Register from "./Register.jsx";
 
-
 // style components
-import { Wrapper } from '../styles/Wrapper.jsx';
+import { Wrapper } from "../styles/Wrapper.jsx";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -32,31 +32,29 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-function Home (){
+function Home() {
   return (
     <div>
       <Wrapper>
-      <GlobalStyle/>
-      <Nav/>
-      <Title />
+        <GlobalStyle />
+        <Nav />
+        <Title />
       </Wrapper>
     </div>
-  )
-};
+  );
+}
 
 class App extends Component {
   render() {
     return (
-        <div>
-          <Route exact path="/" component={Home}/>
-          <Route path="/login" component={Login}/>
-          <Route path="/register" component={Register}/>
-          <Route path="/about" component={Opening}/>
-        </div>
-    )
+      <div>
+        <Route exact path="/" component={Home} />
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/about" component={Opening} />
+      </div>
+    );
   }
 }
 
 export default App;
-
-
