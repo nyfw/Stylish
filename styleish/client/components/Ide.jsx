@@ -81,18 +81,17 @@ class Ide extends React.Component {
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
           enableSnippets={true}
-          wrapEnabled	= {true}
+          wrapEnabled={true}
           width="700px"
           height="250px"
         />
-        <TranslateButton>
-          <button
-            onClick={() => {
-              this.handleSubmit();
-            }}
-          >
-            TRANSLATE
-          </button>
+
+        <TranslateButton
+          onClick={() => {
+            this.handleSubmit();
+          }}
+        >
+          TRANSLATE
         </TranslateButton>
       </div>
     );

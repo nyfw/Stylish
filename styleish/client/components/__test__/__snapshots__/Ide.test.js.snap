@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Ide matches snapshot 1`] = `
+<div>
+  <SplitComponent
+    cursorStart={1}
+    editorProps={
+      Object {
+        "$blockScrolling": true,
+      }
+    }
+    enableBasicAutocompletion={true}
+    enableLiveAutocompletion={true}
+    enableSnippets={true}
+    focus={false}
+    fontSize={12}
+    height="250px"
+    highlightActiveLine={true}
+    maxLines={null}
+    minLines={null}
+    mode="css"
+    name="app"
+    onChange={[Function]}
+    onLoad={null}
+    onPaste={null}
+    onScroll={null}
+    orientation="beside"
+    readOnly={false}
+    scrollMargin={
+      Array [
+        0,
+        0,
+        0,
+        0,
+      ]
+    }
+    setOptions={Object {}}
+    showGutter={true}
+    showLineNumbers={false}
+    showPrintMargin={true}
+    splits={2}
+    style={Object {}}
+    tabSize={4}
+    theme="xcode"
+    value={
+      Array [
+        "/*Load your css*/ 
+ 
+",
+        "/*Styled component translation here*/ 
+ 
+",
+      ]
+    }
+    width="700px"
+    wrapEnabled={true}
+  />
+  <styled.button
+    onClick={[Function]}
+  >
+    TRANSLATE
+  </styled.button>
+</div>
+`;
