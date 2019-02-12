@@ -14,7 +14,8 @@ class Ide extends React.Component {
     this.convertToStyled = this.convertToStyled.bind(this);
     this.state = {
       userInput: '/*Load your css*/ \n \n',
-      converted: '/*Styled component translation here*/ \n \n'
+      converted: '/*Styled component translation here*/ \n \n',
+      example: '/* This is the component you will style and visualize\n<div>\n  <div>\n    <button> </button>\n  </div>\n</div>\n*/ \n \n'
     };
   }
 
@@ -47,18 +48,24 @@ class Ide extends React.Component {
     return result;
   }
 
+
+
   handleSubmit() {
+    const { userInput } = this.state;
     fetch('http://localhost:3000/translate', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        css: this.state.userInput
+        css: userInput,
       })
     })
       .then(response => response.json())
       .then(data => {
+        // console.log("data is ", data);
+        this.props.changeTreeStructure(data);
         if (data) {
           data = this.convertToStyled(data);
+          // console.log("data2 is ", data);
           this.setState({ converted: data });
         } else {
           console.log(data);
@@ -74,14 +81,14 @@ class Ide extends React.Component {
           theme="xcode"
           onChange={this.onChange}
           name="app"
-          value={[this.state.userInput, this.state.converted]}
-          splits={2}
+          value={[this.state.userInput, this.state.example, this.state.converted]}
+          splits={3}
           editorProps={{ $blockScrolling: true }}
           showLineNumbers={false}
           enableBasicAutocompletion={true}
           enableLiveAutocompletion={true}
           enableSnippets={true}
-          wrapEnabled	= {true}
+          wrapEnabled={true}
           width="700px"
           height="250px"
         />
