@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test": "jest"
   },
   "husky": {
     "hooks": {
@@ -16,6 +17,11 @@
     "presets": [
       "@babel/preset-env",
       "@babel/preset-react"
+    ]
+  },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "<rootDir>/setupTests.js"
     ]
   },
   "author": "",
@@ -35,6 +41,9 @@
     "babel-loader": "^8.0.5",
     "body-parser": "^1.18.3",
     "css-loader": "^2.1.0",
+    "enzyme": "^3.8.0",
+    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme-to-json": "^3.3.5",
     "eslint": "^5.13.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "4.0.0",
@@ -43,10 +52,12 @@
     "eslint-plugin-react": "^7.12.4",
     "html-webpack-plugin": "^3.2.0",
     "husky": "^1.3.1",
+    "jest": "^24.1.0",
     "prettier": "1.16.4",
     "pretty-quick": "^1.10.0",
     "react-ace": "^6.4.0",
     "react-router-dom": "^4.3.1",
+    "react-test-renderer": "^16.8.1",
     "style-loader": "^0.23.1",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3",
