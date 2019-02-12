@@ -20,11 +20,16 @@ const options = {
 const db = knex(options);
 
 router.route('/all').get((req, res) => {
-  res.json('hi all users');
+  db.select('*').from('users').then(users => res.json(users))
+
 });
 
 router.route('/register').post((req, res) => {
   user.createUser(req, res, db);
+});
+
+router.route('/login').post((req, res) => {
+  user.signInAuth(req, res, db);
 });
 
 module.exports = router;
