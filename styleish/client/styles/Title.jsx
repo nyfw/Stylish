@@ -7,12 +7,17 @@ export const TitleWrapper = styled.div`
   flex-direction: column;
   background-color: #ECD0EE;
 
-
   img {
     margin: 50px 0 40px 0;
     width: 160px;
     height: 200px;
     flex: 1;
+  }
+
+  .tree {
+    border: 1px black solid;
+    height: 30em;
+    width: 25em;
   }
 `
 export const Button = styled.button`
