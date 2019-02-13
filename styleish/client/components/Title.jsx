@@ -131,12 +131,18 @@ class Title extends Component {
         />
 
         <AboutText>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi
-          ab alias harum quia. Rerum esse, illo rem sequi cumque vitae vel.
-          Necessitatibus omnis cumque nihil eveniet quos odit accusamus. Lorem
-          ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi ab
-          alias harum quia. Rerum esse, illo rem sequi cumque vitae vel.
-          Necessitatibus omnis cumque nihil eveniet quos odit accusamus.
+          Curious about how your project's CSS would look like if converted to
+          styled-components?
+          <br />
+          Input your CSS into the editor and see how it looks like with
+          styled-component syntax!
+          <br />
+          <br />
+          A React D3 tree will be generated based on your input CSS structure so
+          you can better visualize your component structure.
+          <br />
+          <br />
+          Register and login to save any translations.
         </AboutText>
       </TitleWrapper>
     );
@@ -144,69 +150,3 @@ class Title extends Component {
 }
 
 export default Title;
-
-// original state tree structure
-// children: [
-//   {
-//     name: 'Div',
-//     attributes: {
-//       // keyA: 'val A',
-//       // keyB: 'val B',
-//       // keyC: 'val C',
-//     },
-//     children: [
-//       {
-//         name: 'Div',
-//         attributes: {
-//           // keyA: 'val A',
-//           // keyB: 'val B',
-//           // keyC: 'val C',
-//         },
-//         children: [
-//           {
-//             name: 'Button',
-//             attributes: {
-//               // keyA: 'val A',
-//               // keyB: 'val B',
-//               // keyC: 'val C',
-//             },
-//           },
-//         ],
-//       },
-//     ],
-//   },
-// ],
-
-// function that worked without recursion
-
-// tempTreeData[0].children[0].attributes = {};
-// if (arr[1]) {
-
-//   let keyValue = arr[1].split(";");
-
-//   for (let i = 0; i < keyValue.length - 1; i++) {
-//     let theKeyValue = keyValue[i].split(":");
-//     tempTreeData[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
-//     console.log(theKeyValue, "THE KEY VALUE");
-//   }
-// }
-
-// tempTreeData[0].children[0].children[0].attributes = {};
-// if (arr[2]) {
-
-//   let keyValue2 = arr[2].split(";");
-//   for (let i = 0; i < keyValue2.length - 1; i++) {
-//     let theKeyValue = keyValue2[i].split(":");
-//     tempTreeData[0].children[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
-//   }
-// }
-// // console.log(keyValue2);
-// tempTreeData[0].children[0].children[0].children[0].attributes = {};
-// if (arr[3]) {
-
-//   let keyValue3 = arr[3].split(";")
-//   for (let i = 0; i < keyValue3.length - 1; i++) {
-//     let theKeyValue = keyValue3[i].split(":");
-//     tempTreeData[0].children[0].children[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
-//   }
-// }
