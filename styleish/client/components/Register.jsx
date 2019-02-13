@@ -65,7 +65,8 @@ class Register extends React.Component {
           Email: <input ref="email" />
           <br />
           <br />
-          New Password:<input ref="password" />
+          New Password:
+          <input type="password" ref="password" />
           <br />
           <input type="submit" />
         </form>
