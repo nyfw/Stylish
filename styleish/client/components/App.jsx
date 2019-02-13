@@ -1,13 +1,10 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 // components
 import Nav from "./Nav.jsx";
 import Title from "./Title.jsx";
-import Login from "./Login.jsx";
-import Opening from "./Opening.jsx";
-import Register from "./Register.jsx";
 import Dashboard from "./Dashboard.jsx";
 
 // style components
@@ -57,9 +54,6 @@ class App extends Component {
     return (
       <div>
         <Route exact path="/" component={Home} />
-        <Route path="/login" component={Login} />
-        <Route path="/register" component={Register} />
-        <Route path="/about" component={Opening} />
         <Route path="/dashboard" component={Dashboard} />
       </div>
     );

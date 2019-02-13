@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import styled from "styled-components";
-import { TitleWrapper, AboutText, Button } from "../styles/Title.jsx";
-import Ide from "./Ide.jsx";
-import { Link } from "react-router-dom";
-import Toggle from "./Toggle.jsx";
 
+import { TitleWrapper, AboutText } from "../styles/Title.jsx";
+import Ide from "./Ide.jsx";
+import Toggle from "./Toggle.jsx";
 import Tree from "react-d3-tree";
 
 const ToggleStyled = styled.button`
