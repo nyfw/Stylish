@@ -103,14 +103,6 @@ class Title extends Component {
     return (
       <TitleWrapper>
         <img src="./logo.png" />
-        <div>
-          <Button>
-            <Link to="/register">REGISTER</Link>
-          </Button>
-          <Button>
-            <Link to="/login">LOG IN</Link>
-          </Button>
-        </div>
 
         <Ide
           treeData={myTreeData}
