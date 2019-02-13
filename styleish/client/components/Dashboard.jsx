@@ -27,6 +27,7 @@ class Dashboard extends React.Component {
   render() {
     //const {auth} = this.state;
     const auth = this.props.location.state;
+    console.log(this.props.location);
     console.log("auth", auth);
 
     return this.state.verified ? (

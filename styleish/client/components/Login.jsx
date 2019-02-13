@@ -74,7 +74,7 @@ class Login extends React.Component {
         <form onSubmit={e => this.handleLoginSubmit(e)}>
           Email: <input ref="email" />
           <br />
-          Password: <input ref="password" />
+          Password: <input type="password" ref="password" />
           <input type="submit" />
         </form>
       </TitleWrapper>
