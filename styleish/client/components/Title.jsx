@@ -1,10 +1,20 @@
 import React, { Component } from "react";
+import styled from "styled-components";
 import { TitleWrapper, AboutText, Button } from "../styles/Title.jsx";
 import Ide from "./Ide.jsx";
 import { Link } from "react-router-dom";
+import Toggle from "./Toggle.jsx";
 
 import Tree from "react-d3-tree";
 
+const ToggleStyled = styled.button`
+  border: 2px solid hotpink;
+  background: Lavenderblush;
+  height: 30px;
+  width: 300px;
+  margin-top: 10px;
+  font-weight: 700;
+`;
 class Title extends Component {
   constructor(props) {
     super(props);
@@ -93,14 +103,6 @@ class Title extends Component {
     return (
       <TitleWrapper>
         <img src="./logo.png" />
-        <div>
-          <Button>
-            <Link to="/register">REGISTER</Link>
-          </Button>
-          <Button>
-            <Link to="/login">LOG IN</Link>
-          </Button>
-        </div>
 
         <Ide
           treeData={myTreeData}
@@ -108,15 +110,27 @@ class Title extends Component {
           changeTreeStructure={this.changeTreeStructure}
         />
         <br />
-        <br />
-        <div className="tree">
-          <Tree
-            data={myTreeData}
-            orientation="vertical"
-            translate={{ x: 300, y: 80 }}
-            zoom={0.7}
-          />
-        </div>
+        <Toggle
+          render={({ on, toggle }) => (
+            <div>
+              <ToggleStyled onClick={toggle}>
+                Show / Hide Styled Components Tree
+              </ToggleStyled>
+
+              {on && (
+                <div className="tree">
+                  <Tree
+                    data={myTreeData}
+                    orientation="vertical"
+                    translate={{ x: 300, y: 80 }}
+                    zoom={0.7}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+        />
+
         <AboutText>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi
           ab alias harum quia. Rerum esse, illo rem sequi cumque vitae vel.
