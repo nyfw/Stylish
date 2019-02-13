@@ -1,17 +1,17 @@
 import React, { Component } from "react";
 import { createGlobalStyle } from "styled-components";
-import { Route, Link } from 'react-router-dom';
+import { Route, Link } from "react-router-dom";
 
-// components 
-import Nav from './Nav.jsx';
-import Title from './Title.jsx';
+// components
+import Nav from "./Nav.jsx";
+import Title from "./Title.jsx";
 import Login from "./Login.jsx";
 import Opening from "./Opening.jsx";
 import Register from "./Register.jsx";
-
+import Dashboard from "./Dashboard.jsx";
 
 // style components
-import { Wrapper } from '../styles/Wrapper.jsx';
+import { Wrapper } from "../styles/Wrapper.jsx";
 
 const GlobalStyle = createGlobalStyle`
   html {
@@ -33,20 +33,17 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
-
 function Home() {
   return (
     <div>
-
       <Wrapper>
         <GlobalStyle />
         <Nav />
         <Title />
       </Wrapper>
     </div>
-  )
-};
+  );
+}
 
 class App extends Component {
   render() {
@@ -56,11 +53,10 @@ class App extends Component {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/about" component={Opening} />
+        <Route path="/dashboard" component={Dashboard} />
       </div>
-    )
+    );
   }
 }
 
 export default App;
-
-
