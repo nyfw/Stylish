@@ -13,6 +13,12 @@ export const TitleWrapper = styled.div`
     flex: 1;
   }
 
+  .ghlogin {
+    width: 180px;
+    height: 40px;
+    fontsize: 16px;
+  }
+
   .tree {
     border: 1px black solid;
     height: 30em;

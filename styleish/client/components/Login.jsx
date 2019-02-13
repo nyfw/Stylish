@@ -7,6 +7,7 @@ import {
   Redirect,
   withRouter
 } from "react-router-dom";
+import { GithubLoginButton } from "react-social-login-buttons";
 
 import Dashboard from "./Dashboard.jsx";
 
@@ -70,13 +71,20 @@ class Login extends React.Component {
 
     return (
       <TitleWrapper>
-        <h1>Login</h1>
+        <h1>Login with Style</h1>
         <form onSubmit={e => this.handleLoginSubmit(e)}>
           Email: <input ref="email" />
           <br />
           Password: <input ref="password" />
           <input type="submit" />
         </form>
+        <GithubLoginButton
+          className="ghlogin"
+          onClick={() => {
+            location.href =
+              "https://github.com/login/oauth/authorize?client_id=8be9921c3c4e64f5a351";
+          }}
+        />
       </TitleWrapper>
     );
   }

@@ -11,6 +11,11 @@ class Dashboard extends React.Component {
   }
   componentDidMount() {
     let token = sessionStorage.getItem("id_token");
+    console.log("code", this.props.location.search);
+    if (this.props.location.search) {
+      this.setState({ verified: true });
+    }
+
     if (token) {
       fetch("http://localhost:3000/users/verifytoken", {
         method: "post",
