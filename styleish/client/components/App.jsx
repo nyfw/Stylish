@@ -8,6 +8,7 @@ import Title from "./Title.jsx";
 import Login from "./Login.jsx";
 import Opening from "./Opening.jsx";
 import Register from "./Register.jsx";
+import Dashboard from "./Dashboard.jsx";
 
 // style components
 import { Wrapper } from "../styles/Wrapper.jsx";
@@ -52,6 +53,7 @@ class App extends Component {
         <Route path="/login" component={Login} />
         <Route path="/register" component={Register} />
         <Route path="/about" component={Opening} />
+        <Route path="/dashboard" component={Dashboard} />
       </div>
     );
   }
