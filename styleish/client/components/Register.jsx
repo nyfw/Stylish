@@ -1,12 +1,6 @@
 import React from "react";
 import { TitleWrapper } from "../styles/Title.jsx";
-import {
-  BrowserRouter as Router,
-  Route,
-  Link,
-  Redirect,
-  withRouter
-} from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 class Register extends React.Component {
   constructor(props) {
