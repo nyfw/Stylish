@@ -11,82 +11,81 @@ class Title extends Component {
     this.state = {
       myTreeData: [
         {
-          name: "yourStyledElement",
-          attributes: {
-            // keyA: 'val A',
-            // keyB: 'val B',
-            // keyC: 'val C',
-          },
-          children: [
-            {
-              name: "Div",
-              attributes: {
-                // keyA: 'val A',
-                // keyB: 'val B',
-                // keyC: 'val C',
-              },
-              children: [
-                {
-                  name: "Div",
-                  attributes: {
-                    // keyA: 'val A',
-                    // keyB: 'val B',
-                    // keyC: 'val C',
-                  },
-                  children: [
-                    {
-                      name: "Button",
-                      attributes: {
-                        // keyA: 'val A',
-                        // keyB: 'val B',
-                        // keyC: 'val C',
-                      }
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
+          name: "yourStyledWrapper",
+          attributes: {}
         }
       ]
     };
+    this.resetTreeData = this.resetTreeData.bind(this);
+    this.buildTreeStructure = this.buildTreeStructure.bind(this);
     this.changeTreeStructure = this.changeTreeStructure.bind(this);
   }
 
-  changeTreeStructure(data) {
-    console.log("data is ", data);
-    const arr = data.split("{");
-    console.log(arr);
+  resetTreeData() {
+    this.setState({
+      myTreeData: [
+        {
+          name: "yourStyledWrapper",
+          attributes: {}
+        }
+      ]
+    });
+  }
+
+  buildTreeStructure(data, example) {
+    this.resetTreeData();
     const { myTreeData } = this.state;
     let tempTreeData = [...myTreeData];
+    let currentNode = tempTreeData[0];
 
-    tempTreeData[0].children[0].attributes = {};
-    let keyValue = arr[1].split(";");
-    for (let i = 0; i < keyValue.length; i++) {
-      let theKeyValue = keyValue[i].split(":");
-      tempTreeData[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
+    const elementTags = example.split("\n");
+    let stack = [];
+
+    for (let i = 0; i < elementTags.length; i++) {
+      if (elementTags[i].trim().slice(0, 2) === "</") {
+        currentNode = stack[stack.length - 1];
+        stack.pop();
+      } else if (elementTags[i].trim()[0] === "<") {
+        if (!Array.isArray(currentNode.children)) currentNode.children = [];
+        currentNode.children[currentNode.children.length] = {};
+        currentNode.children[
+          currentNode.children.length - 1
+        ].name = elementTags[i].trim();
+        currentNode.children[currentNode.children.length - 1].attributes = {};
+        let temp = currentNode;
+        stack.push(temp);
+        currentNode = currentNode.children[currentNode.children.length - 1];
+      }
     }
-
-    tempTreeData[0].children[0].children[0].attributes = {};
-    let keyValue2 = arr[2].split(";");
-    for (let i = 0; i < keyValue2.length; i++) {
-      let theKeyValue = keyValue2[i].split(":");
-      tempTreeData[0].children[0].children[0].attributes[theKeyValue[0]] =
-        theKeyValue[1];
-    }
-    console.log(keyValue2);
-
-    tempTreeData[0].children[0].children[0].children[0].attributes = {};
-    let keyValue3 = arr[3].split(";");
-    for (let i = 0; i < keyValue3.length; i++) {
-      let theKeyValue = keyValue3[i].split(":");
-      tempTreeData[0].children[0].children[0].children[0].attributes[
-        theKeyValue[0]
-      ] = theKeyValue[1];
-    }
-
     this.setState({ myTreeData: tempTreeData });
-    // this.props.treeData[0].children[0].attributes.data = "Hello";
+  }
+
+  changeTreeStructure(data) {
+    // console.log(data, " IS DATA");
+    const dataArr = data.split("{");
+    // console.log(dataArr, " IS DATAARR");
+    // dataArr.forEach(element => {
+    //   console.log(element.trim().split('\n'));
+    // })
+    const appendChild = (node, arr, index) => {
+      if (!node.children) return;
+      if (!arr[index]) return;
+      node.children[0].attributes = {};
+      let keyValue = arr[index].split(";");
+      for (let i = 0; i < keyValue.length - 1; i++) {
+        let theKeyValue = keyValue[i].split(":");
+        for (let j = 0; j < node.children.length; j++) {
+          node.children[j].attributes[theKeyValue[0]] = theKeyValue[1];
+        }
+      }
+      node = node.children[0];
+      appendChild(node, arr, index + 1);
+    };
+    const { myTreeData } = this.state;
+    let tempTreeData = [...myTreeData];
+    let currentNode = tempTreeData[0];
+    appendChild(currentNode, dataArr, 1);
+    this.setState({ myTreeData: tempTreeData });
   }
 
   render() {
@@ -105,12 +104,18 @@ class Title extends Component {
 
         <Ide
           treeData={myTreeData}
+          buildTreeStructure={this.buildTreeStructure}
           changeTreeStructure={this.changeTreeStructure}
         />
         <br />
         <br />
         <div className="tree">
-          <Tree data={myTreeData} orientation="vertical" />
+          <Tree
+            data={myTreeData}
+            orientation="vertical"
+            translate={{ x: 300, y: 80 }}
+            zoom={0.7}
+          />
         </div>
         <AboutText>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum quasi
@@ -126,3 +131,69 @@ class Title extends Component {
 }
 
 export default Title;
+
+// original state tree structure
+// children: [
+//   {
+//     name: 'Div',
+//     attributes: {
+//       // keyA: 'val A',
+//       // keyB: 'val B',
+//       // keyC: 'val C',
+//     },
+//     children: [
+//       {
+//         name: 'Div',
+//         attributes: {
+//           // keyA: 'val A',
+//           // keyB: 'val B',
+//           // keyC: 'val C',
+//         },
+//         children: [
+//           {
+//             name: 'Button',
+//             attributes: {
+//               // keyA: 'val A',
+//               // keyB: 'val B',
+//               // keyC: 'val C',
+//             },
+//           },
+//         ],
+//       },
+//     ],
+//   },
+// ],
+
+// function that worked without recursion
+
+// tempTreeData[0].children[0].attributes = {};
+// if (arr[1]) {
+
+//   let keyValue = arr[1].split(";");
+
+//   for (let i = 0; i < keyValue.length - 1; i++) {
+//     let theKeyValue = keyValue[i].split(":");
+//     tempTreeData[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
+//     console.log(theKeyValue, "THE KEY VALUE");
+//   }
+// }
+
+// tempTreeData[0].children[0].children[0].attributes = {};
+// if (arr[2]) {
+
+//   let keyValue2 = arr[2].split(";");
+//   for (let i = 0; i < keyValue2.length - 1; i++) {
+//     let theKeyValue = keyValue2[i].split(":");
+//     tempTreeData[0].children[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
+//   }
+// }
+// // console.log(keyValue2);
+// tempTreeData[0].children[0].children[0].children[0].attributes = {};
+// if (arr[3]) {
+
+//   let keyValue3 = arr[3].split(";")
+//   for (let i = 0; i < keyValue3.length - 1; i++) {
+//     let theKeyValue = keyValue3[i].split(":");
+//     tempTreeData[0].children[0].children[0].children[0].attributes[theKeyValue[0]] = theKeyValue[1];
+//   }
+// }

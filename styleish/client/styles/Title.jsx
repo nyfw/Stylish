@@ -16,7 +16,8 @@ export const TitleWrapper = styled.div`
   .tree {
     border: 1px black solid;
     height: 30em;
-    width: 25em;
+    width: 47em;
+    background-color: white;
   }
 `;
 export const Button = styled.button`

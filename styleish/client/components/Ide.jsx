@@ -14,16 +14,20 @@ class Ide extends React.Component {
     this.convertToStyled = this.convertToStyled.bind(this);
     this.state = {
       userInput: "/*Load your css*/ \n \n",
-      converted: "/*Styled component translation here*/ \n \n",
       example:
-        "/* This is the component you will style and visualize\n<div>\n  <div>\n    <button> </button>\n  </div>\n</div>\n*/ \n \n"
+        "/* This is the component you will style and visualize*/\n<div>\n  <div>\n    <button>\n    </button>\n  </div>\n</div>\n \n \n",
+      converted: "/*Styled component translation here*/ \n \n"
     };
   }
 
   onChange(newValue) {
+    // console.log(newValue);
     let unparsed = "";
     unparsed += newValue[0];
     this.setState({ userInput: unparsed });
+    unparsed = "";
+    unparsed += newValue[1];
+    this.setState({ example: unparsed });
   }
 
   convertToStyled(data) {
@@ -43,7 +47,7 @@ class Ide extends React.Component {
     }
     copiedinfo = data.substring(firstBracket + 1, lastBracket);
     let result =
-      "/*Styled component translation here*/ \n \n const <yourStyledElement> = styled.<tagToStyle>`" +
+      "/*Styled component translation here*/ \n \n const <yourStyledWrapper> = styled.<tagToStyle>`" +
       copiedinfo +
       "`;";
     return result;
@@ -61,6 +65,7 @@ class Ide extends React.Component {
       .then(response => response.json())
       .then(data => {
         // console.log("data is ", data);
+        this.props.buildTreeStructure(data, this.state.example);
         this.props.changeTreeStructure(data);
         if (data) {
           data = this.convertToStyled(data);
@@ -94,6 +99,7 @@ class Ide extends React.Component {
           wrapEnabled={true}
           width="700px"
           height="250px"
+          readOnly={false}
         />
 
         <TranslateButton
