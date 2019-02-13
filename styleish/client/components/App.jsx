@@ -31,6 +31,13 @@ const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
   }
+  a {
+    text-decoration: none;
+    color: palevioletred;
+    :hover {
+      cursor: pointer;
+    }
+  }
 `;
 
 function Home() {
